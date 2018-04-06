@@ -17,7 +17,8 @@ volumes:
 services:
   ### MongoDB
   mongo:
-    build: ./mongo
+    build: 
+      context: ./mongo
     ports:
       - "27017:27017"
     volumes:
@@ -34,5 +35,21 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    networks:
+      - backend
+
+  ### MySQL
+  mysql:
+    build:
+      context: ./mysql
+    environment:
+      - MYSQL_DATABASE=default
+      - MYSQL_USER=default
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./.data/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
     networks:
       - backend
