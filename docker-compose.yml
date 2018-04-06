@@ -53,3 +53,13 @@ services:
       - "3306:3306"
     networks:
       - backend
+
+  ### Redis
+  redis:
+    build: ./redis
+    volumes:
+      - ./.data/redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
