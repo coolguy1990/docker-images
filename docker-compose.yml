@@ -1,0 +1,19 @@
+version: '3'
+
+networks:
+  backend:
+    driver: "bridge"
+
+volumes:
+  mongo:
+    driver: "local"
+
+services:
+  mongo:
+    build: ./mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.data/mongo:/data/db
+    networks:
+      - backend
