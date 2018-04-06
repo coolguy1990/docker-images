@@ -7,13 +7,32 @@ networks:
 volumes:
   mongo:
     driver: "local"
+  elasticsearch-data:
+    driver: "local"
+  elasticsearch-plugins:
+    driver: "local"
+  mysql:
+    driver: "local"
 
 services:
+  ### MongoDB
   mongo:
     build: ./mongo
     ports:
       - "27017:27017"
     volumes:
       - ./.data/mongo:/data/db
+    networks:
+      - backend
+
+  ### Elasticsearch
+  elasticsearch:
+    build: ./elasticsearch
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+      - elasticsearch-plugins:/usr/share/elasticsearch/plugins
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     networks:
       - backend
