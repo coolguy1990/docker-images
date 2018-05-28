@@ -63,3 +63,19 @@ services:
       - "6379:6379"
     networks:
       - backend
+
+  ### Rabbitmq
+  rabbitmq:
+    build: ./rabbitmq
+    environment:
+      - RABBITMQ_LOGS=/var/log/rabbitmq/rabbit.log
+      - RABBITMQ_NODENAME=rabbit
+    volumes:
+      - ./rabbitmq/rabbitmq.config:/tmp/rabbitmq.config:ro
+      - ./.data/rabbitmq:/var/lib/rabbitmq:rw
+      - ./.data/rabbitmq/logs:/var/log/rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
