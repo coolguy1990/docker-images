@@ -17,7 +17,7 @@ volumes:
 services:
   ### MongoDB
   mongo:
-    build: 
+    build:
       context: ./mongo
     ports:
       - "27017:27017"
@@ -79,3 +79,32 @@ services:
       - "5672:5672"
     labels:
       NAME: "rabbitmq"
+
+  ### Rethinkdb
+  rethinkdb:
+    image: rethinkdb:2.3.6
+    volumes:
+      - ./.data/rethinkdb:/data
+    ports:
+      - 8080:8080
+      - 28015:28015
+      - 29015:29015
+    networks:
+      - backend
+    labels:
+      NAME: "rethinkdb"
+    command: rethinkdb --server-tag rethinkone --server-name rethinkone --bind all
+
+  # rethinkdb2:
+  #   image: rethinkdb:2.3.6
+  #   volumes:
+  #     - ./.data/rethinkdb2:/data
+  #   ports:
+  #     - 8081:8080
+  #     - 28016:28015
+  #     - 29016:29015
+  #   networks:
+  #     - backend
+  #   labels:
+  #     NAME: "rethinkdb2"
+  #   command: rethinkdb --server-tag rethinktwo --server-name rethinktwo --bind all -j rethinkdb:29015
